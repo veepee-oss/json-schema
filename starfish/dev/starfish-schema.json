@@ -457,6 +457,17 @@
                           "type": "string",
                           "description": "Badge url for starfish dashboard link"
                         },
+                        "build": {
+                            "type": "object",
+                            "description": "Customize builds globally",
+                            "additionalProperties": false,
+                            "properties": {
+                                "starfishProvidedDockerfile": {
+                                    "type": "string",
+                                    "description": "Name of Dockerfile provided by Starfish tech templates (default to Dockerfile.starfish)"
+                                }
+                            }
+                        },
                         "webHookPipelineURL": {
                           "type": "string",
                           "description": "Webhook pipeline url for gathering metrics about gitlab pipelines"
@@ -596,6 +607,17 @@
                               }
                             }
                         },
+                        "fastDeploy": {
+                            "type": "object",
+                            "description": "Configure fast deploy feature",
+                            "additionalProperties": false,
+                            "properties": {
+                              "enable": {
+                                "type": "boolean",
+                                "description": "Enable fast deploy feature, default false (flipt feature flag)"
+                              }
+                            }
+                        },
                         "outputFolder": {
                             "$ref": "#/$defs/filesystemPath",
                             "description": "Folder for starfish output (rendered manifests, etc)"
@@ -695,6 +717,25 @@
                                       "production": {
                                           "type": "boolean",
                                           "description": "Allow failure production (default: true)"
+                                      }
+                                  }
+                                },
+                                 "waitForPreflight": {
+                                  "type": "object",
+                                  "description": "Decides which environment can wait for preflights",
+                                  "additionalProperties": false,
+                                  "properties": {
+                                      "integration": {
+                                          "type": "boolean",
+                                          "description": "Wait for preflight in integration (default: true)"
+                                      },
+                                      "staging": {
+                                          "type": "boolean",
+                                          "description": "Wait for preflight in staging (default: true)"
+                                      },
+                                      "production": {
+                                          "type": "boolean",
+                                          "description": "Wait for preflight in production (default: true)"
                                       }
                                   }
                                 },
@@ -1019,6 +1060,10 @@
               "dindEnable": {
                 "type": "boolean",
                 "description": "Enable/disable docker in docker"
+              },
+              "composePath": {
+                "type": "string",
+                "description": "Path to the docker-compose file to run in before_script (enables dind automatically)"
               },
               "cmd": {
                   "type": "string",
